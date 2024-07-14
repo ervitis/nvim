@@ -7,6 +7,10 @@ return {
       highlight = {
         enable = true,
       },
+      sync_install = false,
+      indent = {
+        enable = true,
+      },
       incremental_selection = {
         enable = true,
         keymaps = {
