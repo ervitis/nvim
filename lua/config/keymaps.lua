@@ -32,4 +32,4 @@ keymap.set("n", "<M-b>", ":bprevious<CR>", { desc = "Previous buffer" })
 keymap.set("n", "<M-v>", ":bnext<CR>", { desc = "Next buffer" })
 
 -- show LazyGit
-keymap.set("n", "<Leader>lg", "<cmd>LazyGit<cr>", { desc = "Show LazyGit" })
+keymap.set("n", "<Leader>G", "<cmd>LazyGit<cr>", { desc = "Show LazyGit" })
