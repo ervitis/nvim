@@ -33,3 +33,20 @@ keymap.set("n", "<M-v>", ":bnext<CR>", { desc = "Next buffer" })
 
 -- show LazyGit
 keymap.set("n", "<Leader>G", "<cmd>LazyGit<cr>", { desc = "Show LazyGit" })
+
+-- splits
+keymap.set("n", "<Leader>sv", ":vsplit<CR>", { desc = "Split vertically" })
+keymap.set("n", "<Leader>sh", ":split<CR>", { desc = "Split horizontally" })
+keymap.set("n", "<Leader>sc", ":close<CR>", { desc = "Close current split" })
+
+keymap.set("n", "<M-h>", "<C-w>h", { desc = "Move to left split" })
+keymap.set("n", "<M-j>", "<C-w>j", { desc = "Move to below split" })
+keymap.set("n", "<M-k>", "<C-w>k", { desc = "Move to above split" })
+keymap.set("n", "<M-l>", "<C-w>l", { desc = "Move to right split" })
+
+keymap.set("n", "<C-Left>", ":vertical resize -2<CR>", { desc = "Decrease width" })
+keymap.set("n", "<C-Right>", ":vertical resize +2<CR>", { desc = "Increase width" })
+keymap.set("n", "<C-Up>", ":resize -2<CR>", { desc = "Decrease height" })
+keymap.set("n", "<C-Down>", ":resize +2<CR>", { desc = "Increase height" })
+
+keymap.set("n", "<Leader>se", "<C-w>=", { desc = "Make splits equal size" })
