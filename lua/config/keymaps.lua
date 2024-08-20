@@ -50,3 +50,14 @@ keymap.set("n", "<C-Up>", ":resize -2<CR>", { desc = "Decrease height" })
 keymap.set("n", "<C-Down>", ":resize +2<CR>", { desc = "Increase height" })
 
 keymap.set("n", "<Leader>se", "<C-w>=", { desc = "Make splits equal size" })
+
+keymap.set("n", "<Leader>bn", ":BufferLineCycleNext<CR>", { desc = "Next buffer" })
+keymap.set("n", "<Leader>bp", ":BufferLineCyclePrev<CR>", { desc = "Previous buffer" })
+keymap.set("n", "<Leader>bc", ":BufferLinePickClose<CR>", { desc = "Close buffer" })
+
+-- Navigate into methods using lsp
+keymap.set("n", "gd", vim.lsp.buf.definition, { desc = "Go to definition" })
+keymap.set("n", "gD", vim.lsp.buf.declaration, { desc = "Go to declaration" })
+keymap.set("n", "gi", vim.lsp.buf.implementation, { desc = "Go to implementation" })
+keymap.set("n", "gr", vim.lsp.buf.references, { desc = "Show references" })
+keymap.set("n", "gp", vim.lsp.buf.hover, { desc = "Peek definition" })
