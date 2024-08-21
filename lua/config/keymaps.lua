@@ -15,8 +15,10 @@ keymap.set("n", "<M-d>", ":t.<CR>", { desc = "Duplicate line" })
 keymap.set("v", "<M-d>", ":t'><CR>gv", { desc = "Duplicate selection block" })
 
 -- Expand or shrink selection using vim-expand-region
-keymap.set("n", "<M-w>", "<Plug>(expand_region_expand)", { desc = "Expand selection" })
-keymap.set("n", "<M-W>", "<Plug>(expand_region_shrink)", { desc = "Shrink selection" })
+keymap.set("n", "<M-w>", "<Plug>(VM-Add-Cursor-Down)", { desc = "Expand selection" })
+keymap.set("n", "<M-W>", "<Plug>(VM-Add-Cursor-Up)", { desc = "Shrink selection" })
+keymap.set("v", "<M-w>", "<Plug>(VM-Add-Cursor-Down)", { desc = "Expand selection" })
+keymap.set("v", "<M-W>", "<Plug>(VM-Add-Cursor-Up)", { desc = "Shrink selection" })
 
 -- go to end of file
 keymap.set("n", "Y", "y$", { desc = "Yank to the end of the file" })
@@ -56,8 +58,8 @@ keymap.set("n", "<Leader>bp", ":BufferLineCyclePrev<CR>", { desc = "Previous buf
 keymap.set("n", "<Leader>bc", ":BufferLinePickClose<CR>", { desc = "Close buffer" })
 
 -- Navigate into methods using lsp
-keymap.set("n", "gd", vim.lsp.buf.definition, { desc = "Go to definition" })
-keymap.set("n", "gD", vim.lsp.buf.declaration, { desc = "Go to declaration" })
-keymap.set("n", "gi", vim.lsp.buf.implementation, { desc = "Go to implementation" })
-keymap.set("n", "gr", vim.lsp.buf.references, { desc = "Show references" })
-keymap.set("n", "gp", vim.lsp.buf.hover, { desc = "Peek definition" })
+keymap.set("n", "<C-d>", vim.lsp.buf.definition, { desc = "Go to definition" })
+keymap.set("n", "<C-D>", vim.lsp.buf.declaration, { desc = "Go to declaration" })
+keymap.set("n", "<C-i>", vim.lsp.buf.implementation, { desc = "Go to implementation" })
+keymap.set("n", "<C-r>", vim.lsp.buf.references, { desc = "Show references" })
+keymap.set("n", "<C-p>", vim.lsp.buf.hover, { desc = "Peek definition" })
