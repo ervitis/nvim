@@ -1,3 +1,4 @@
+local filesystem = require("neo-tree.sources.filesystem")
 return {
   {
     "catppuccin/nvim",
@@ -193,16 +194,23 @@ return {
     build = ':lua require("go.install").update_all_sync()',
   },
   {
-    "nvim-tree/nvim-tree.lua",
-    dependencies = {
-      "nvim-tree/nvim-web-devicons",
-    },
-    config = function()
-      require("nvim-tree").setup({
-        filters = {
-          dotfiles = false,
+    "nvim-neo-tree/neo-tree.nvim",
+    opts = {
+      filesystem = {
+        filtered_items = {
+          visible = true,
+          show_hidden_count = true,
+          hide_dotfiles = false,
+          hide_gitignored = true,
+          hide_by_name = {
+            ".git",
+            ".DS_Store",
+          },
+          never_show = {
+            ".git",
+          },
         },
-      })
-    end,
+      },
+    },
   },
 }
