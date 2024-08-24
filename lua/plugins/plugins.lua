@@ -192,4 +192,17 @@ return {
     ft = { "go", "gomod" },
     build = ':lua require("go.install").update_all_sync()',
   },
+  {
+    "nvim-tree/nvim-tree.lua",
+    dependencies = {
+      "nvim-tree/nvim-web-devicons",
+    },
+    config = function()
+      require("nvim-tree").setup({
+        filters = {
+          dotfiles = false,
+        },
+      })
+    end,
+  },
 }
