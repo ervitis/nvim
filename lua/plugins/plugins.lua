@@ -208,6 +208,7 @@ return {
           },
           never_show = {
             ".git",
+            "node_modules",
           },
         },
       },
