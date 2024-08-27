@@ -21,6 +21,10 @@ return {
     },
   },
   {
+    "williamboman/mason.nvim",
+    "williamboman/mason-lspconfig.nvim",
+  },
+  {
     {
       "mfussenegger/nvim-dap",
       dependencies = {
@@ -91,7 +95,7 @@ return {
     dependencies = { "nvim-telescope/telescope.nvim", "nvim-lua/plenary.nvim" },
     keys = {
       {
-        "<leader>fB",
+        "<leader>fb",
         ":Telescope file_browser path=%:p:h%:p:h<cr>",
         desc = "Browse Files",
       },
@@ -118,11 +122,6 @@ return {
     dependencies = {
       "nvim-lua/plenary.nvim",
     },
-    -- setting the keybinding for LazyGit with 'keys' is recommended in
-    -- order to load the plugin when the command is run for the first time
-    keys = {
-      { "<leader>gg", "<cmd>LazyGit<cr>", desc = "Open LazyGit" },
-    },
   },
   {
     {
@@ -148,6 +147,9 @@ return {
     },
     {
       "neovim/nvim-lspconfig",
+      config = function()
+        require("lspconfig").gopls.setup({})
+      end,
     },
     {
       "jose-elias-alvarez/null-ls.nvim",
