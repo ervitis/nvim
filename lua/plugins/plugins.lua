@@ -28,7 +28,6 @@ return {
         "rcarriga/nvim-dap-ui",
         "theHamsta/nvim-dap-virtual-text",
         "nvim-neotest/nvim-nio",
-        "williamboman/mason.nvim",
       },
       config = function()
         local dap = require("dap")
@@ -53,16 +52,6 @@ return {
             return " " .. variable.value
           end,
         })
-
-        -- Handled by nvim-dap-go
-        dap.adapters.go = {
-          type = "server",
-          port = "${port}",
-          executable = {
-            command = "dlv",
-            args = { "dap", "-l", "127.0.0.1:${port}" },
-          },
-        }
 
         vim.keymap.set("n", "<space>b", dap.toggle_breakpoint)
         vim.keymap.set("n", "<space>gb", dap.run_to_cursor)
