@@ -14,12 +14,6 @@ keymap.set("v", "<M-Down>", ":m '>+1<CR>gv=gv", { desc = "Move block down" })
 keymap.set("n", "<M-d>", ":t.<CR>", { desc = "Duplicate line" })
 keymap.set("v", "<M-d>", ":t'><CR>gv", { desc = "Duplicate selection block" })
 
--- Expand or shrink selection using vim-expand-region
-keymap.set("n", "<M-w>", "<Plug>(VM-Add-Cursor-Down)", { desc = "Expand selection" })
-keymap.set("n", "<M-W>", "<Plug>(VM-Add-Cursor-Up)", { desc = "Shrink selection" })
-keymap.set("v", "<M-w>", "<Plug>(VM-Add-Cursor-Down)", { desc = "Expand selection" })
-keymap.set("v", "<M-W>", "<Plug>(VM-Add-Cursor-Up)", { desc = "Shrink selection" })
-
 -- go to end of file
 keymap.set("n", "Y", "y$", { desc = "Yank to the end of the file" })
 
