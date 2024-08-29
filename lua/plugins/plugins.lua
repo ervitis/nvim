@@ -72,16 +72,16 @@ return {
           ui.close()
         end, { desc = "Close dap ui" })
 
-        vim.keymap.set("n", "<F7>", dap.step_into, { desc = "Debug step into" })
-        vim.keymap.set("n", "<F8>", dap.step_over, { desc = "Debug step over" })
-        vim.keymap.set("n", "<F5>", dap.continue, { desc = "Start Debug" })
-        vim.keymap.set("n", "<C-F5>", dap.restart, { desc = "Debug restart" })
+        vim.keymap.set("n", "<Leader>gdi", dap.step_into, { desc = "Debug step into" })
+        vim.keymap.set("n", "<Leader>gdo", dap.step_over, { desc = "Debug step over" })
+        vim.keymap.set("n", "<Leader>gds", dap.continue, { desc = "Start Debug" })
+        vim.keymap.set("n", "<Leader>gdr", dap.restart, { desc = "Debug restart" })
 
         dap.adapters.delve = {
           type = "server",
           port = "${port}",
           executable = {
-            command = "dlv",
+            command = vim.fn.expand("~") .. "/go/bin/dlv",
             args = { "dap", "-l", "127.0.0.1:${port}" },
           },
         }
