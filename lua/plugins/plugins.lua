@@ -225,4 +225,33 @@ return {
       },
     },
   },
+  {
+    "sindrets/diffview.nvim",
+    config = function()
+      vim.keymap.set(
+        "n",
+        "<Leader>dvc",
+        ":DiffviewClose<CR>",
+        { noremap = true, silent = true, desc = "Close diffview" }
+      )
+      vim.keymap.set(
+        "n",
+        "<Leader>dvt",
+        ":DiffviewToggleFiles<CR>",
+        { noremap = true, silent = true, desc = "Toggle files in diffview" }
+      )
+      vim.keymap.set(
+        "n",
+        "<Leader>dvf",
+        ":DiffviewFocusFiles<CR>",
+        { noremap = true, silent = true, desc = "Focus files in diffview" }
+      )
+      vim.keymap.set(
+        "n",
+        "<Leader>dvr",
+        ":DiffviewRefresh<CR>",
+        { noremap = true, silent = true, desc = "Refresh diffview" }
+      )
+    end,
+  },
 }
