@@ -22,13 +22,47 @@ return {
   },
   {
     "williamboman/mason.nvim",
+  },
+  {
     "williamboman/mason-lspconfig.nvim",
+    config = function()
+      require("mason-lspconfig").setup({
+        ensure_installed = {
+          "pyright",
+          "lua_ls",
+          "bashls",
+          "yamlls",
+          "gopls",
+          "jsonls",
+          "taplo",
+          "rust_analyzer",
+        },
+      })
+      local lspconfig = require("lspconfig")
+      lspconfig.pyright.setup({})
+      lspconfig.lua_ls.setup({
+        settings = {
+          Lua = {
+            diagnostics = {
+              globals = { "vim" },
+            },
+          },
+        },
+      })
+      lspconfig.bashls.setup({})
+      lspconfig.yamlls.setup({})
+      lspconfig.jsonls.setup({})
+      lspconfig.taplo.setup({})
+      lspconfig.gopls.setup({})
+      lspconfig.rust_analyzer.setup({})
+    end,
   },
   {
     {
       "mfussenegger/nvim-dap",
       dependencies = {
         "leoluz/nvim-dap-go",
+        "mfussenegger/nvim-dap-python",
         "rcarriga/nvim-dap-ui",
         "theHamsta/nvim-dap-virtual-text",
         "nvim-neotest/nvim-nio",
@@ -39,6 +73,8 @@ return {
 
         require("dapui").setup()
         require("dap-go").setup()
+
+        require("dap-python").setup(vim.fn.expand("~") .. "/.virtualenvs/debugpy/bin/python")
 
         require("nvim-dap-virtual-text").setup({
           -- This just tries to mitigate the chance that I leak tokens here. Probably won't stop it from happening...
@@ -161,19 +197,11 @@ return {
     },
   },
   {
-    {
-      "wfxr/protobuf.vim",
-      ft = { "proto" },
-    },
-    {
-      "neovim/nvim-lspconfig",
-      config = function()
-        require("lspconfig").gopls.setup({})
-      end,
-    },
-    {
-      "jose-elias-alvarez/null-ls.nvim",
-    },
+    "wfxr/protobuf.vim",
+    ft = { "proto" },
+  },
+  {
+    "neovim/nvim-lspconfig",
   },
   {
     "nvim-treesitter/nvim-treesitter-refactor",
