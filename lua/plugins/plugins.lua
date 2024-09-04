@@ -25,7 +25,13 @@ return {
   },
   {
     "williamboman/mason-lspconfig.nvim",
+    dependencies = {
+      "williamboman/mason.nvim",
+      "neovim/nvim-lspconfig",
+    },
     config = function()
+      require("mason").setup()
+
       require("mason-lspconfig").setup({
         ensure_installed = {
           "pyright",
@@ -36,6 +42,8 @@ return {
           "jsonls",
           "taplo",
           "rust_analyzer",
+          "terraformls",
+          "tflint",
         },
       })
       local lspconfig = require("lspconfig")
@@ -49,6 +57,8 @@ return {
           },
         },
       })
+      lspconfig.terraformls.setup({})
+      lspconfig.tflint.setup({})
       lspconfig.bashls.setup({})
       lspconfig.yamlls.setup({})
       lspconfig.jsonls.setup({})
