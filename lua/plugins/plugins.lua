@@ -44,7 +44,6 @@ return {
           "rust_analyzer",
           "terraformls",
           "tflint",
-          "cuepls",
         },
       })
       local lspconfig = require("lspconfig")
