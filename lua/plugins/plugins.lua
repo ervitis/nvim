@@ -44,6 +44,7 @@ return {
           "rust_analyzer",
           "terraformls",
           "tflint",
+          "cuepls",
         },
       })
       local lspconfig = require("lspconfig")
@@ -63,7 +64,13 @@ return {
       lspconfig.yamlls.setup({})
       lspconfig.jsonls.setup({})
       lspconfig.taplo.setup({})
-      lspconfig.gopls.setup({})
+      lspconfig.gopls.setup({
+        settings = {
+          gopls = {
+            buildFlags = { "-tags=integration" },
+          },
+        },
+      })
       lspconfig.rust_analyzer.setup({})
     end,
   },
