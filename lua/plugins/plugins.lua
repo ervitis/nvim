@@ -75,6 +75,24 @@ return {
             staticcheck = true,
             usePlaceholders = true,
             completeUnimported = true,
+            symbolStyle = "Dynamic",
+            semanticTokens = true,
+            codelenses = {
+              gc_details = true,
+              regenerate_cgo = true,
+              generate = true,
+              test = true,
+              tidy = true,
+            },
+            hints = {
+              assignVariableTypes = true,
+              compositeLiteralFields = true,
+              compositeLiteralTypes = true,
+              constantValues = true,
+              functionTypeParameters = true,
+              parameterNames = true,
+              rangeVariableTypes = true,
+            },
           },
         },
       })
@@ -251,6 +269,27 @@ return {
     },
     config = function()
       require("go").setup()
+
+      vim.api.nvim_create_autocmd("BufWritePre", {
+        pattern = "*.go",
+        callback = function()
+          local params = vim.lsp.util.make_range_params()
+          params.context = { only = { "source.organizeImports" } }
+
+          local result = vim.lsp.buf_request_sync(0, "textDocument/codeAction", params, 3000)
+
+          for _, res in pairs(result or {}) do
+            for _, r in pairs(res.result or {}) do
+              if r.edit then
+                local enc = (vim.lsp.get_client_by_id(res.client_id) or {}).offset_encoding or "utf-16"
+                vim.lsp.util.apply_workspace_edit(r.edit, enc)
+              end
+            end
+          end
+
+          vim.lsp.buf.format({ async = false })
+        end,
+      })
     end,
     event = { "CmdlineEnter" },
     ft = { "go", "gomod" },
