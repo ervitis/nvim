@@ -1,4 +1,5 @@
 local filesystem = require("neo-tree.sources.filesystem")
+
 return {
   {
     "catppuccin/nvim",
@@ -67,6 +68,13 @@ return {
         settings = {
           gopls = {
             buildFlags = { "-tags=integration" },
+            gofumpt = true,
+            analyses = {
+              unusedparams = true,
+            },
+            staticcheck = true,
+            usePlaceholders = true,
+            completeUnimported = true,
           },
         },
       })
