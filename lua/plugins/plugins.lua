@@ -85,12 +85,8 @@ return {
               tidy = true,
             },
             hints = {
-              assignVariableTypes = true,
-              compositeLiteralFields = true,
-              compositeLiteralTypes = true,
               constantValues = true,
               functionTypeParameters = true,
-              parameterNames = true,
               rangeVariableTypes = true,
             },
           },
@@ -276,7 +272,7 @@ return {
           local params = vim.lsp.util.make_range_params()
           params.context = { only = { "source.organizeImports" } }
 
-          local result = vim.lsp.buf_request_sync(0, "textDocument/codeAction", params, 3000)
+          local result = vim.lsp.buf_request_sync(0, "textDocument/codeAction", params, 900)
 
           for _, res in pairs(result or {}) do
             for _, r in pairs(res.result or {}) do
