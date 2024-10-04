@@ -341,4 +341,31 @@ return {
       )
     end,
   },
+  {
+    "andythigpen/nvim-coverage",
+    dependencies = {
+      "nvim-lua/plenary.nvim",
+    },
+    config = function()
+      local function find_coverage_files()
+        local cf = vim.fn.glob("**/coverage.out", true, true)
+        if #cf > 0 then
+          return cf[1]
+        end
+        return nil
+      end
+
+      require("coverage").setup({
+        lang = {
+          go = {
+            coverage_file = find_coverage_files(),
+          },
+        },
+      })
+
+      vim.keymap.set("n", "<Leader>ccs", ":Coverage<CR>", { desc = "Show Coverage" })
+      vim.keymap.set("n", "<Leader>cch", ":CoverageHide<CR>", { desc = "Hide Coverage" })
+      vim.keymap.set("n", "<Leader>cct", ":CoverageToggle<CR>", { desc = "Toggle Coverage" })
+    end,
+  },
 }
