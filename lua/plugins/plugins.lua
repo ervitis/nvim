@@ -71,6 +71,7 @@ return {
             gofumpt = true,
             analyses = {
               unusedparams = true,
+              fillstruct = true,
             },
             staticcheck = true,
             usePlaceholders = true,
@@ -93,6 +94,9 @@ return {
         },
       })
       lspconfig.rust_analyzer.setup({})
+
+      -- keybindings
+      vim.keymap.set("n", "<Leader>fs", "<Cmd>GoFillStruct<Cr>", { desc = "Fill the golang struct" })
     end,
   },
   {
