@@ -368,4 +368,15 @@ return {
       vim.keymap.set("n", "<Leader>cct", ":CoverageToggle<CR>", { desc = "Toggle Coverage" })
     end,
   },
+  {
+    "jjo/vim-cue",
+  },
+  {
+    "stevearc/conform.nvim",
+    opts = {
+      formatters_by_ft = {
+        cue = { "cue_fmt" },
+      },
+    },
+  },
 }
