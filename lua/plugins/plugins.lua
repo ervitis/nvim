@@ -40,6 +40,7 @@ return {
           "bashls",
           "yamlls",
           "gopls",
+          "dagger",
           "jsonls",
           "taplo",
           "rust_analyzer",
@@ -58,6 +59,7 @@ return {
           },
         },
       })
+      lspconfig.dagger.setup({})
       lspconfig.terraformls.setup({})
       lspconfig.tflint.setup({})
       lspconfig.bashls.setup({})

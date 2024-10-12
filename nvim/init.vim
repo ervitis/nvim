@@ -1,0 +1,1 @@
+echo 'init.vim success'
