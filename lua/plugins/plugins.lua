@@ -191,6 +191,34 @@ return {
     },
   },
   {
+    "nvim-telescope/telescope.nvim",
+    opts = {
+      defaults = {
+        hidden = true,
+        file_ignore_patterns = {
+          "node_modules/.*",
+          "%.git/.*",
+          "build/.*",
+          "dist/.*",
+          "yarn.lock",
+          ".DS_Store",
+          "%.cache/.*",
+          "%.npm/.*",
+        },
+        vimgrep_arguments = {
+          "rg",
+          "--color=never",
+          "--no-heading",
+          "--with-filename",
+          "--line-number",
+          "--column",
+          "--smart-case",
+          "--hidden",
+        },
+      },
+    },
+  },
+  {
     "nvim-telescope/telescope-file-browser.nvim",
     dependencies = { "nvim-telescope/telescope.nvim", "nvim-lua/plenary.nvim" },
     keys = {
