@@ -34,6 +34,7 @@ return {
       require("mason").setup()
 
       require("mason-lspconfig").setup({
+        automatic_installation = true,
         ensure_installed = {
           "pyright",
           "lua_ls",
@@ -42,6 +43,7 @@ return {
           "gopls",
           "dagger",
           "jsonls",
+          "solargraph",
           "taplo",
           "rust_analyzer",
           "terraformls",
@@ -96,6 +98,7 @@ return {
         },
       })
       lspconfig.rust_analyzer.setup({})
+      lspconfig.solargraph.setup({})
 
       -- keybindings
       vim.keymap.set("n", "<Leader>fs", "<Cmd>GoFillStruct<Cr>", { desc = "Fill the golang struct" })
@@ -121,6 +124,15 @@ return {
         require("dap-python").setup(vim.fn.expand("~") .. "/.virtualenvs/debugpy/bin/python")
 
         require("nvim-dap-virtual-text").setup({
+          enabled = true,
+          enable_commands = true,
+          all_frames = false,
+          commented = false,
+          highlight_changed_variables = true,
+          highlight_new_as_changed = false,
+          show_stop_reason = true,
+          only_first_definition = true,
+          clear_on_continue = false,
           -- This just tries to mitigate the chance that I leak tokens here. Probably won't stop it from happening...
           display_callback = function(variable)
             local name = string.lower(variable.name)
@@ -274,6 +286,11 @@ return {
   },
   {
     "neovim/nvim-lspconfig",
+    opts = {
+      servers = {
+        solargraph = {},
+      },
+    },
   },
   {
     "nvim-treesitter/nvim-treesitter-refactor",
