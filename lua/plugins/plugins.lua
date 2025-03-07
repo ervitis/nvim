@@ -25,12 +25,17 @@ return {
     "williamboman/mason.nvim",
   },
   {
+    "saghen/blink.cmp",
+    version = "*",
+},
+  {
     "williamboman/mason-lspconfig.nvim",
     dependencies = {
       "williamboman/mason.nvim",
       "neovim/nvim-lspconfig",
     },
     config = function()
+      require('blink.cmp').setup({})
       require("mason").setup()
 
       require("mason-lspconfig").setup({
@@ -286,6 +291,9 @@ return {
   },
   {
     "neovim/nvim-lspconfig",
+    dependencies = {
+	"saghen/blink.cmp",
+},
     opts = {
       servers = {
         solargraph = {},
