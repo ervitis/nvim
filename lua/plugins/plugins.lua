@@ -1,5 +1,3 @@
-local filesystem = require("neo-tree.sources.filesystem")
-
 return {
   {
     "catppuccin/nvim",
@@ -27,7 +25,10 @@ return {
   {
     "saghen/blink.cmp",
     version = "*",
-},
+    config = function()
+      require("blink.cmp").setup({})
+    end,
+  },
   {
     "williamboman/mason-lspconfig.nvim",
     dependencies = {
@@ -35,7 +36,7 @@ return {
       "neovim/nvim-lspconfig",
     },
     config = function()
-      require('blink.cmp').setup({})
+      require("blink.cmp").setup({})
       require("mason").setup()
 
       require("mason-lspconfig").setup({
@@ -46,11 +47,9 @@ return {
           "bashls",
           "yamlls",
           "gopls",
-          "dagger",
           "jsonls",
-          "solargraph",
           "taplo",
-          "rust_analyzer",
+          "solargraph",
           "terraformls",
           "tflint",
         },
@@ -66,13 +65,11 @@ return {
           },
         },
       })
-      lspconfig.dagger.setup({})
       lspconfig.terraformls.setup({})
       lspconfig.tflint.setup({})
       lspconfig.bashls.setup({})
       lspconfig.yamlls.setup({})
       lspconfig.jsonls.setup({})
-      lspconfig.taplo.setup({})
       lspconfig.gopls.setup({
         settings = {
           gopls = {
@@ -82,7 +79,7 @@ return {
               unusedparams = true,
               fillstruct = true,
             },
-            staticcheck = true,
+            staticcheck = false,
             usePlaceholders = true,
             completeUnimported = true,
             symbolStyle = "Dynamic",
@@ -102,7 +99,6 @@ return {
           },
         },
       })
-      lspconfig.rust_analyzer.setup({})
       lspconfig.solargraph.setup({})
 
       -- keybindings
@@ -131,6 +127,11 @@ return {
         require("nvim-dap-virtual-text").setup({
           enabled = true,
           enable_commands = true,
+          all_references = false,
+          text_prefix = " -> ",
+          separator = ", ",
+          error_prefix = "x ",
+          info_prefix = "[] ",
           all_frames = false,
           commented = false,
           highlight_changed_variables = true,
@@ -138,6 +139,10 @@ return {
           show_stop_reason = true,
           only_first_definition = true,
           clear_on_continue = false,
+          virt_lines = false,
+          virt_lines_above = false,
+          virt_text_pos = false,
+          filter_references_pattern = "",
           -- This just tries to mitigate the chance that I leak tokens here. Probably won't stop it from happening...
           display_callback = function(variable)
             local name = string.lower(variable.name)
@@ -162,7 +167,7 @@ return {
 
         -- Eval var under cursor
         vim.keymap.set("n", "<Leader>?", function()
-          require("dapui").eval(nil, { enter = true })
+          require("dapui").eval(nil, { enter = true, context = "", width = 40, height = 10 })
         end)
 
         vim.keymap.set("n", "<Leader>du", function()
@@ -269,31 +274,14 @@ return {
     },
   },
   {
-    {
-      "hrsh7th/nvim-cmp",
-      opts = function(_, opts)
-        local cmp = require("cmp")
-
-        opts.sources = cmp.config.sources({
-          { name = "nvim_lsp" },
-          { name = "buffer" },
-          { name = "path" },
-          { name = "treesitter" },
-        })
-
-        return opts
-      end,
-    },
-  },
-  {
     "wfxr/protobuf.vim",
     ft = { "proto" },
   },
   {
     "neovim/nvim-lspconfig",
     dependencies = {
-	"saghen/blink.cmp",
-},
+      "saghen/blink.cmp",
+    },
     opts = {
       servers = {
         solargraph = {},
@@ -319,7 +307,18 @@ return {
           "vim",
           "lua",
           "markdown",
+          "go",
+          "python",
+          "hcl",
+          "yaml",
+          "sql",
+          "ruby",
+          "toml",
         },
+        sync_install = false,
+        auto_install = true,
+        ignore_install = {},
+        modules = {},
       })
     end,
   },
@@ -341,16 +340,16 @@ return {
 
       vim.api.nvim_create_autocmd("BufWritePre", {
         pattern = "*.go",
-        callback = function()
-          local params = vim.lsp.util.make_range_params()
-          params.context = { only = { "source.organizeImports" } }
+        callback = function(event)
+          local params = vim.lsp.util.make_range_params(event.buf, "utf-16")
+          params.context = { only = { "source.organizeImport" } }
 
           local result = vim.lsp.buf_request_sync(0, "textDocument/codeAction", params, 900)
 
-          for _, res in pairs(result or {}) do
+          for client_id, res in pairs(result or {}) do
             for _, r in pairs(res.result or {}) do
               if r.edit then
-                local enc = (vim.lsp.get_client_by_id(res.client_id) or {}).offset_encoding or "utf-16"
+                local enc = (vim.lsp.get_client_by_id(client_id) or {}).offset_encoding or "utf-16"
                 vim.lsp.util.apply_workspace_edit(r.edit, enc)
               end
             end
