@@ -34,10 +34,14 @@ return {
     dependencies = {
       "williamboman/mason.nvim",
       "neovim/nvim-lspconfig",
+      "saghen/blink.cmp",
     },
     config = function()
       require("blink.cmp").setup({})
+
       require("mason").setup()
+
+      local capabilities = require("blink.cmp").get_lsp_capabilities()
 
       require("mason-lspconfig").setup({
         automatic_installation = true,
@@ -53,55 +57,58 @@ return {
           "terraformls",
           "tflint",
         },
-      })
-      local lspconfig = require("lspconfig")
-      lspconfig.pyright.setup({})
-      lspconfig.lua_ls.setup({
-        settings = {
-          Lua = {
-            diagnostics = {
-              globals = { "vim" },
-            },
-          },
+        handlers = {
+          ["lua_ls"] = function()
+            require("lspconfig").lua_ls.setup({
+              capabilities = capabilities,
+              settings = {
+                Lua = {
+                  diagnostics = {
+                    globals = { "vim" },
+                  },
+                },
+              },
+            })
+          end,
+          ["gopls"] = function()
+            require("lspconfig").gopls.setup({
+              capabilities = capabilities,
+              settings = {
+                gopls = {
+                  buildFlags = { "-tags=integration,reports" },
+                  gofumpt = true,
+                  analyses = {
+                    unusedparams = true,
+                    fillstruct = true,
+                  },
+                  staticcheck = false,
+                  usePlaceholders = true,
+                  completeUnimported = true,
+                  symbolStyle = "Dynamic",
+                  semanticTokens = true,
+                  codelenses = {
+                    gc_details = true,
+                    regenerate_cgo = true,
+                    generate = true,
+                    test = true,
+                    tidy = true,
+                  },
+                  hints = {
+                    constantValues = true,
+                    functionTypeParameters = true,
+                    rangeVariableTypes = true,
+                  },
+                },
+              },
+            })
+          end,
+          function(server_name)
+            require("lspconfig")[server_name].setup({ capabilities = capabilities })
+          end,
         },
       })
-      lspconfig.terraformls.setup({})
-      lspconfig.tflint.setup({})
-      lspconfig.bashls.setup({})
-      lspconfig.yamlls.setup({})
-      lspconfig.jsonls.setup({})
-      lspconfig.gopls.setup({
-        settings = {
-          gopls = {
-            buildFlags = { "-tags=integration" },
-            gofumpt = true,
-            analyses = {
-              unusedparams = true,
-              fillstruct = true,
-            },
-            staticcheck = false,
-            usePlaceholders = true,
-            completeUnimported = true,
-            symbolStyle = "Dynamic",
-            semanticTokens = true,
-            codelenses = {
-              gc_details = true,
-              regenerate_cgo = true,
-              generate = true,
-              test = true,
-              tidy = true,
-            },
-            hints = {
-              constantValues = true,
-              functionTypeParameters = true,
-              rangeVariableTypes = true,
-            },
-          },
-        },
-      })
-      lspconfig.solargraph.setup({})
 
-      -- keybindings
+      -- Keybindings
       vim.keymap.set("n", "<Leader>fs", "<Cmd>GoFillStruct<Cr>", { desc = "Fill the golang struct" })
     end,
   },
