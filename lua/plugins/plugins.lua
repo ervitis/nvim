@@ -26,7 +26,13 @@ return {
     "saghen/blink.cmp",
     version = "*",
     config = function()
-      require("blink.cmp").setup({})
+      require("blink.cmp").setup({
+        keymap = {
+          ["<M-CR>"] = { "accept" },
+          ["<C-n>"] = { "select_next" },
+          ["<C-p>"] = { "select_prev" },
+        },
+      })
     end,
   },
   {
@@ -294,6 +300,10 @@ return {
         solargraph = {},
       },
     },
+  },
+  {
+    "folke/which-key.nvim",
+    event = "VeryLazy",
   },
   {
     "nvim-treesitter/nvim-treesitter-refactor",
