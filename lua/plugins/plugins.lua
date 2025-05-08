@@ -21,6 +21,7 @@ return {
   },
   {
     "williamboman/mason.nvim",
+    version = "^1.0.0",
   },
   {
     "saghen/blink.cmp",
@@ -37,19 +38,19 @@ return {
   },
   {
     "williamboman/mason-lspconfig.nvim",
+    version = "^1.0.0",
     dependencies = {
       "williamboman/mason.nvim",
       "neovim/nvim-lspconfig",
       "saghen/blink.cmp",
     },
     config = function()
-      require("blink.cmp").setup({})
-
-      require("mason").setup()
+      require("mason").setup({})
 
       local capabilities = require("blink.cmp").get_lsp_capabilities()
 
       require("mason-lspconfig").setup({
+        automatic_enable = true,
         automatic_installation = true,
         ensure_installed = {
           "pyright",
