@@ -3,6 +3,7 @@
 -- Add any additional keymaps here
 
 local keymap = vim.keymap
+local opts = { noremap = true, silent = true }
 
 -- move lines or block between
 keymap.set("n", "<M-Up>", ":m .-2<CR>==", { desc = "Move line up" })
@@ -22,13 +23,12 @@ keymap.set("n", "<Leader>ts", "<cmd>Telescope buffers<cr>", { desc = "Show teles
 
 -- show terminal buffer
 keymap.set("n", "<Leader>nt", "<cmd>terminal<cr>", { desc = "Show terminal buffer" })
+keymap.set('n', '<Leader>ff', '<cmd>Telescope find_files<cr>', opts)
+keymap.set('n', '<Leader>fg', '<cmd>Telescope live_grep<cr>', opts)
 
 -- navigate between buffers
 keymap.set("n", "<M-b>", ":bprevious<CR>", { desc = "Previous buffer" })
 keymap.set("n", "<M-v>", ":bnext<CR>", { desc = "Next buffer" })
-
--- show LazyGit
-keymap.set("n", "<Leader>G", "<cmd>LazyGit<cr>", { desc = "Show LazyGit" })
 
 -- splits
 keymap.set("n", "<Leader>sv", ":vsplit<CR>", { desc = "Split vertically" })
@@ -57,3 +57,19 @@ keymap.set("n", "<C-D>", vim.lsp.buf.declaration, { desc = "Go to declaration" }
 keymap.set("n", "<C-i>", vim.lsp.buf.implementation, { desc = "Go to implementation" })
 keymap.set("n", "<C-r>", vim.lsp.buf.references, { desc = "Show references" })
 keymap.set("n", "<C-p>", vim.lsp.buf.hover, { desc = "Peek definition" })
+
+keymap.set('n', 'gd', '<cmd>lua vim.lsp.buf.definition()<cr>', opts)
+keymap.set('n', 'gr', '<cmd>lua vim.lsp.buf.references()<cr>', opts)
+keymap.set('n', 'K', '<cmd>lua vim.lsp.buf.hover()<cr>', opts)
+
+-- GitConflict
+keymap.set('n', '<Leader>co', '<Plug>(git-conflict-ours)', {})
+keymap.set('n', '<Leader>ct', '<Plug>(git-conflict-theirs)', {})
+keymap.set('n', '<Leader>cb', '<Plug>(git-conflict-both)', {})
+keymap.set('n', '<Leader>c0', '<Plug>(git-conflict-none)', {})
+
+-- Gitsigns navigation
+keymap.set('n', ']c', "<cmd>Gitsigns next_hunk<cr>", opts)
+keymap.set('n', '[c', "<cmd>Gitsigns prev_hunk<cr>", opts)
+
+vim.keymap.set("n", "<Leader>fs", ":GoFillStruct<CR>", { noremap = true, silent = true })
