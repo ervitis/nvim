@@ -64,8 +64,25 @@ return {
     "neovim/nvim-lspconfig",
     config = function()
       local lspconfig = require("lspconfig")
-      lspconfig.gopls.setup({ autostart = false })
-    end
+      lspconfig.gopls.setup({
+        settings = {
+          gopls = {
+            gofumpt = true,
+            staticcheck = true,
+          }
+        },
+        on_attach = function(client, bufnr)
+          local keymap = vim.keymap.set
+          local opts = { buffer = bufnr }
+
+          keymap("n", "<C-d>", vim.lsp.buf.definition, { desc = "Go to definition", unpack(opts) })
+          keymap("n", "<C-e>", vim.lsp.buf.declaration, { desc = "Go to declaration", unpack(opts) })
+          keymap("n", "<C-i>", vim.lsp.buf.implementation, { desc = "Go to implementation", unpack(opts) })
+          keymap("n", "<C-r>", vim.lsp.buf.references, { desc = "Show references", unpack(opts) })
+          keymap("n", "<C-p>", vim.lsp.buf.hover, { desc = "Peek definition", unpack(opts) })
+        end,
+      })
+    end,
   },
   {
     "hrsh7th/nvim-cmp",
@@ -98,7 +115,7 @@ return {
     dependencies = { 'ray-x/guihua.lua' },
     config = function()
       require('go').setup({
-        lsp_cfg = true,     -- enable lspconfig
+        lsp_cfg = false,     -- enable lspconfig
         lsp_gofumpt = true, -- use gofumpt
       })
     end,

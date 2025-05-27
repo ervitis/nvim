@@ -53,14 +53,10 @@ keymap.set("n", "<Leader>bc", ":BufferLinePickClose<CR>", { desc = "Close buffer
 
 -- Navigate into methods using lsp
 keymap.set("n", "<C-d>", vim.lsp.buf.definition, { desc = "Go to definition" })
-keymap.set("n", "<C-D>", vim.lsp.buf.declaration, { desc = "Go to declaration" })
+keymap.set("n", "<C-e>", vim.lsp.buf.declaration, { desc = "Go to declaration" })
 keymap.set("n", "<C-i>", vim.lsp.buf.implementation, { desc = "Go to implementation" })
 keymap.set("n", "<C-r>", vim.lsp.buf.references, { desc = "Show references" })
 keymap.set("n", "<C-p>", vim.lsp.buf.hover, { desc = "Peek definition" })
-
-keymap.set('n', 'gd', '<cmd>lua vim.lsp.buf.definition()<cr>', opts)
-keymap.set('n', 'gr', '<cmd>lua vim.lsp.buf.references()<cr>', opts)
-keymap.set('n', 'K', '<cmd>lua vim.lsp.buf.hover()<cr>', opts)
 
 -- GitConflict
 keymap.set('n', '<Leader>co', '<Plug>(git-conflict-ours)', {})
