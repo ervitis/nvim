@@ -5,7 +5,7 @@ return {
     name = "catppuccin",
     lazy = false,
     opts = {
-      flavour = "mocha",
+      flavour = "frappe",
     },
   },
   -- LazyVim (optional, for general features, with LSP and completion disabled)
@@ -17,9 +17,9 @@ return {
       completion = false,
     },
   },
-  { "nvim-lualine/lualine.nvim",       dependencies = { 'nvim-tree/nvim-web-devicons' } },
-  { "nvim-tree/nvim-tree.lua",         dependencies = { 'nvim-tree/nvim-web-devicons' } },
-  { "nvim-telescope/telescope.nvim",   dependencies = 'nvim-lua/plenary.nvim' },
+  { "nvim-lualine/lualine.nvim", dependencies = { "nvim-tree/nvim-web-devicons" } },
+  { "nvim-tree/nvim-tree.lua", dependencies = { "nvim-tree/nvim-web-devicons" } },
+  { "nvim-telescope/telescope.nvim", dependencies = "nvim-lua/plenary.nvim" },
   { "akinsho/toggleterm.nvim" },
   -- Treesitter for syntax
   { "nvim-treesitter/nvim-treesitter", build = ":TSUpdate" },
@@ -38,15 +38,15 @@ return {
         never_show = {
           ".git",
           "node_modules",
-        }
-      }
-    }
+        },
+      },
+    },
   },
   -- LSP & Completion
   { "williamboman/mason.nvim", config = true },
   {
     "williamboman/mason-lspconfig.nvim",
-    dependencies = 'mason.nvim',
+    dependencies = "mason.nvim",
     config = function()
       require("mason-lspconfig").setup({
         ensure_installed = { "terraformls", "bashls", "yamlls", "pyright" },
@@ -56,20 +56,21 @@ return {
             require("lspconfig")[server_name].setup({})
           end,
           ["gopls"] = function() end,
-        }
+        },
       })
-    end
+    end,
   },
   {
     "neovim/nvim-lspconfig",
     config = function()
       local lspconfig = require("lspconfig")
       lspconfig.gopls.setup({
+        autostart = false,
         settings = {
           gopls = {
             gofumpt = true,
             staticcheck = true,
-          }
+          },
         },
         on_attach = function(client, bufnr)
           local keymap = vim.keymap.set
@@ -82,11 +83,19 @@ return {
           keymap("n", "<C-p>", vim.lsp.buf.hover, { desc = "Peek definition", unpack(opts) })
         end,
       })
+      lspconfig.pyright.setup({
+        settings = {
+          python = {
+            venvPath = ".",
+            venv = ".venv",
+          },
+        },
+      })
     end,
   },
   {
     "hrsh7th/nvim-cmp",
-    dependencies = { 'hrsh7th/cmp-nvim-lsp', 'hrsh7th/cmp-buffer', 'L3MON4D3/LuaSnip' },
+    dependencies = { "hrsh7th/cmp-nvim-lsp", "hrsh7th/cmp-buffer", "L3MON4D3/LuaSnip" },
     config = function()
       vim.o.completeopt = "menu,menuone,noselect"
       local cmp = require("cmp")
@@ -104,7 +113,7 @@ return {
         },
         experimental = {
           ghost_text = false,
-        }
+        },
       })
     end,
   },
@@ -112,14 +121,14 @@ return {
   -- Golang
   {
     "ray-x/go.nvim",
-    dependencies = { 'ray-x/guihua.lua' },
+    dependencies = { "ray-x/guihua.lua" },
     config = function()
-      require('go').setup({
-        lsp_cfg = false,     -- enable lspconfig
+      require("go").setup({
+        lsp_cfg = false, -- enable lspconfig
         lsp_gofumpt = true, -- use gofumpt
       })
     end,
-    ft = { "go", "gomod" }
+    ft = { "go", "gomod" },
   },
 
   -- Terraform, Bash, YAML, Python LSP
@@ -131,7 +140,7 @@ return {
   {
     "akinsho/git-conflict.nvim",
     config = function()
-      require('git-conflict').setup({})
-    end
+      require("git-conflict").setup({})
+    end,
   },
 }
