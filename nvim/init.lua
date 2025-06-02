@@ -6,3 +6,4 @@ vim.o.wrap = false
 vim.o.linebreak = true
 vim.o.termguicolors = true
 vim.o.updatetime = 250
+vim.o.signcolumn = "yes"
