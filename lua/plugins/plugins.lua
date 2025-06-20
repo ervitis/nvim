@@ -49,7 +49,7 @@ return {
     dependencies = "mason.nvim",
     config = function()
       require("mason-lspconfig").setup({
-        ensure_installed = { "terraformls", "bashls", "yamlls", "pyright" },
+        ensure_installed = { "terraformls", "zls", "bashls", "yamlls", "pyright" },
         automatic_installation = true,
         handlers = {
           function(server_name)
@@ -106,6 +106,9 @@ return {
           keymap("n", "<C-p>", vim.lsp.buf.hover, { desc = "Peek definition", unpack(opts) })
         end,
       })
+
+      lspconfig.zls.setup({})
+
       lspconfig.pyright.setup({
         settings = {
           python = {
