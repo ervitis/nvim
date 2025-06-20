@@ -70,16 +70,34 @@ return {
       end
       local lspconfig = require("lspconfig")
       lspconfig.gopls.setup({
-        autostart = false,
         settings = {
           gopls = {
             gofumpt = true,
             staticcheck = true,
+            analyses = {
+              unusedparams = true,
+            },
+            hints = {
+              assignVariableTypes = true,
+              compositeLiteralFields = true,
+              constantValues = true,
+              functionTypeParameters = true,
+              parameterNames = true,
+              rangeVariableTypes = true,
+            },
           },
         },
         on_attach = function(client, bufnr)
           local keymap = vim.keymap.set
           local opts = { buffer = bufnr }
+
+          vim.api.nvim_create_autocmd("BufWritePre", {
+            buffer = bufnr,
+            callback = function()
+              vim.lsp.buf.format()
+              vim.lsp.buf.code_action({ context = { only = { "source.organizeImports" } } })
+            end,
+          })
 
           keymap("n", "<C-d>", vim.lsp.buf.definition, { desc = "Go to definition", unpack(opts) })
           keymap("n", "<C-e>", vim.lsp.buf.declaration, { desc = "Go to declaration", unpack(opts) })
