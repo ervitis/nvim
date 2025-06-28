@@ -58,13 +58,14 @@ return {
     dependencies = "mason.nvim",
     config = function()
       require("mason-lspconfig").setup({
-        ensure_installed = { "terraformls", "zls", "bashls", "yamlls", "pyright" },
+        ensure_installed = { "terraformls", "bashls", "yamlls", "pyright" },
         automatic_installation = true,
         handlers = {
           function(server_name)
-            require("lspconfig")[server_name].setup({})
+            if server_name ~= "zls" and server_name ~= "gopls" then
+              require("lspconfig")[server_name].setup({})
+            end
           end,
-          ["gopls"] = function() end,
         },
       })
     end,
@@ -85,8 +86,10 @@ return {
         vim.api.nvim_create_autocmd("BufWritePre", {
           buffer = bufnr,
           callback = function()
-            vim.lsp.buf.format()
-            vim.lsp.buf.code_action({ context = { only = { "source.organizeImports" } } })
+            vim.lsp.buf.format({ async = false })
+            if client.name ~= "zls" then
+              vim.lsp.buf.code_action({ context = { only = { "source.organizeImports" } }, apply = true })
+            end
           end,
         })
 
@@ -125,6 +128,7 @@ return {
             enable_snippets = true,
             warn_style = true,
             verbose = true,
+            zig_exe_path = "/opt/homebrew/bin/zig",
           },
         },
         on_attach = on_attach,
