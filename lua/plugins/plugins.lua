@@ -249,6 +249,11 @@ return {
     ft = { "go", "gomod" },
   },
 
+  -- zig
+  {
+    "ziglang/zig.vim",
+  },
+
   -- Terraform, Bash, YAML, Python LSP
   -- mason will install 'terraform-ls', 'bash-language-server', 'yamlls', 'pyright'
 
