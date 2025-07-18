@@ -129,6 +129,7 @@ return {
             warn_style = true,
             verbose = true,
             zig_exe_path = "/opt/homebrew/bin/zig",
+            enable_diagnostics = true,
           },
         },
         on_attach = on_attach,
