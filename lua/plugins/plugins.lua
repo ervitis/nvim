@@ -25,12 +25,11 @@ return {
   {
     "nvim-treesitter/nvim-treesitter",
     build = ":TSUpdate",
-    config = function()
-      require("nvim-treesitter.configs").setup({
-        ensure_installed = { "lua" },
-        highlight = { enable = true },
-      })
-    end,
+    opts = {
+      ensure_installed = { "lua", "nvim", "c", "javascript" },
+      highlight = { enable = true },
+      indent = { enable = true },
+    },
   },
   {
     "nvim-neo-tree/neo-tree.nvim",
@@ -52,9 +51,9 @@ return {
     },
   },
   -- LSP & Completion
-  { "williamboman/mason.nvim", config = true },
+  { "mason-org/mason.nvim", config = true },
   {
-    "williamboman/mason-lspconfig.nvim",
+    "mason-org/mason-lspconfig.nvim",
     dependencies = "mason.nvim",
     config = function()
       require("mason-lspconfig").setup({
