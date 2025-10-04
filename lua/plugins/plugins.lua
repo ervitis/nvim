@@ -4,6 +4,7 @@ return {
     "catppuccin/nvim",
     name = "catppuccin",
     lazy = false,
+    version = "v1.11.0",
     opts = {
       flavour = "frappe",
     },
@@ -11,20 +12,26 @@ return {
   -- LazyVim (optional, for general features, with LSP and completion disabled)
   {
     "LazyVim/LazyVim",
+    version = "v15.7.1",
     opts = {
       colorscheme = "catppuccin",
       lsp = false,
       completion = false,
     },
   },
-  { "nvim-lualine/lualine.nvim", dependencies = { "nvim-tree/nvim-web-devicons" } },
-  { "nvim-tree/nvim-tree.lua", dependencies = { "nvim-tree/nvim-web-devicons" } },
-  { "nvim-telescope/telescope.nvim", dependencies = "nvim-lua/plenary.nvim" },
-  { "akinsho/toggleterm.nvim" },
+  {
+    "nvim-lualine/lualine.nvim",
+    commit = "b8c23159c0161f4b89196f74ee3a6d02cdc3a955",
+    dependencies = { "nvim-tree/nvim-web-devicons" },
+  },
+  { "nvim-tree/nvim-tree.lua", dependencies = { "nvim-tree/nvim-web-devicons" }, version = "v1.14.0" },
+  { "nvim-telescope/telescope.nvim", dependencies = "nvim-lua/plenary.nvim", version = "0.1.8" },
+  { "akinsho/toggleterm.nvim", version = "v2.13.1" },
   -- Treesitter for syntax
   {
     "nvim-treesitter/nvim-treesitter",
     build = ":TSUpdate",
+    version = "v0.10.0",
     opts = {
       ensure_installed = { "lua", "nvim", "c", "javascript" },
       highlight = { enable = true },
@@ -33,6 +40,7 @@ return {
   },
   {
     "nvim-neo-tree/neo-tree.nvim",
+    version = "3.36.1",
     opts = {
       filesystem = {
         visible = true,
@@ -51,13 +59,13 @@ return {
     },
   },
   -- LSP & Completion
-  { "mason-org/mason.nvim", config = true },
+  { "mason-org/mason.nvim", config = true, version = "v2.1.0" },
   {
     "mason-org/mason-lspconfig.nvim",
     dependencies = "mason.nvim",
     config = function()
       require("mason-lspconfig").setup({
-        ensure_installed = { "terraformls", "bashls", "yamlls", "pyright" },
+        ensure_installed = { "terraformls", "bashls", "yamlls", "pyright", version = "v2.1.0" },
         automatic_installation = true,
         handlers = {
           function(server_name)
@@ -72,7 +80,7 @@ return {
   {
     "neovim/nvim-lspconfig",
     config = function()
-      local signs = { Error = " ", Warn = " ", Hint = " ", Info = " " }
+      local signs = { Error = " ", Warn = " ", Hint = " ", Info = " ", version = "v2.5.0" }
       for type, icon in pairs(signs) do
         local hl = "DiagnosticSign" .. type
         vim.fn.sign_define(hl, { text = icon, texthl = hl, numhl = "" })
@@ -173,6 +181,7 @@ return {
   -- multicursor
   {
     "jake-stewart/multicursor.nvim",
+    commit = "0c6ceae228bf209e8b8717df9de500770c4e7022",
     event = "VeryLazy",
     config = function()
       local mc = require("multicursor-nvim")
@@ -234,12 +243,14 @@ return {
     config = function()
       require("which-key").setup()
     end,
+    version = "v3.17.0",
   },
 
   -- Golang
   {
     "ray-x/go.nvim",
     dependencies = { "ray-x/guihua.lua" },
+    version = "v0.10.4",
     config = function()
       require("go").setup({
         lsp_cfg = false, -- enable lspconfig
@@ -252,16 +263,18 @@ return {
   -- zig
   {
     "ziglang/zig.vim",
+    commit = "0c100863c7901a79d9c4b7a2092e335cc09337cc",
   },
 
   -- Terraform, Bash, YAML, Python LSP
   -- mason will install 'terraform-ls', 'bash-language-server', 'yamlls', 'pyright'
 
   -- Git & Merge Conflicts
-  { "tpope/vim-fugitive" },
-  { "lewis6991/gitsigns.nvim", config = true },
+  { "tpope/vim-fugitive", commit = "61b51c09b7c9ce04e821f6cf76ea4f6f903e3cf4" },
+  { "lewis6991/gitsigns.nvim", config = true, version = "v1.0.2" },
   {
     "akinsho/git-conflict.nvim",
+    version = "v2.1.0",
     config = function()
       require("git-conflict").setup({})
     end,
